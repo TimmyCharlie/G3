@@ -7,6 +7,14 @@ import java.util.ArrayList;
 
 public class GACDao {
 
+    String dbUserName;
+    String dbPassword;
+
+    public GACDao(String userName, String password) {
+        this.dbUserName = userName;
+        this.dbPassword = password;
+    }
+
     public ArrayList<GAC> getGACByLevel(int level) throws ClassNotFoundException, SQLException {
         String SELECT_GAC_SQL = "SELECT * FROM geographicarea WHERE level=?;";
 
@@ -14,7 +22,7 @@ public class GACDao {
 
         Class.forName("com.mysql.jdbc.Driver");
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/censusdb", "root", "root");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/censusdb", dbUserName, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GAC_SQL)) {
             preparedStatement.setInt(1, level);
             ResultSet rs = preparedStatement.executeQuery();
@@ -26,7 +34,15 @@ public class GACDao {
 
             return result;
         }
+    }
 
+    public boolean isConnectionValid() throws ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/censusdb", dbUserName, dbPassword)){
+            return connection.isValid(1);
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
 }
