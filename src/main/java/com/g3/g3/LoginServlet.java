@@ -1,6 +1,8 @@
 package com.g3.g3;
 
+import dao.AgeGroupDao;
 import dao.GACDao;
+import dao.AgeDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,12 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet(name = "loginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
 
-    public static GACDao dao;
+    public static GACDao gacDao;
+    public static AgeDao ageDao;
+    public static AgeGroupDao ageGroupDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,10 +30,12 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
 
-        dao = new GACDao(username,password);
+        gacDao = new GACDao(username,password);
+        ageDao = new AgeDao(username,password);
+        ageGroupDao = new AgeGroupDao(username,password);
         boolean isConnValid = false;
         try {
-            isConnValid = dao.isConnectionValid();
+            isConnValid = gacDao.isConnectionValid();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

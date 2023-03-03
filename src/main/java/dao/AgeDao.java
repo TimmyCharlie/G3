@@ -1,34 +1,44 @@
 package dao;
 
+import bean.Age;
 import bean.GAC;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class GACDao {
+public class AgeDao {
 
     String dbUserName;
     String dbPassword;
 
-    public GACDao(String userName, String password) {
+    public AgeDao(String userName, String password) {
         this.dbUserName = userName;
         this.dbPassword = password;
     }
 
-    public ArrayList<GAC> getGACByLevel(int level) throws ClassNotFoundException, SQLException {
-        String SELECT_GAC_SQL = "SELECT * FROM geographicarea WHERE level=?;";
+    public ArrayList<Age> getAgesByGeographicAreaIdAndYear(int geographicAreaId, int censusYearId) throws ClassNotFoundException, SQLException {
+        String SELECT_GAC_SQL = "SELECT * FROM age WHERE geographicArea=? and censusYear=? order by ageGroup ASC;";
 
-        ArrayList<GAC> result = new ArrayList<>();
+        ArrayList<Age> result = new ArrayList<>();
 
         Class.forName("com.mysql.jdbc.Driver");
 
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/censusdb", dbUserName, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GAC_SQL)) {
-            preparedStatement.setInt(1, level);
+            preparedStatement.setInt(1, geographicAreaId);
+            preparedStatement.setInt(2, censusYearId);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                GAC obj = new GAC(rs.getInt("geographicAreaID"), rs.getInt("code"), rs.getInt("level"), rs.getString("name"), rs.getInt("alternativeCode"));
+                Age obj = new Age(
+                        rs.getInt("ageID"),
+                        rs.getInt("ageGroup"),
+                        rs.getInt("censusYear"),
+                        rs.getInt("geographicArea"),
+                        rs.getInt("combined"),
+                        rs.getInt("male"),
+                        rs.getInt("female")
+                );
                 result.add(obj);
             }
 
@@ -56,13 +66,7 @@ public class GACDao {
         }
     }
 
-    public boolean isConnectionValid() throws ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/censusdb", dbUserName, dbPassword)){
-            return connection.isValid(1);
-        } catch (SQLException e) {
-            return false;
-        }
-    }
+
+
 
 }
