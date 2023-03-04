@@ -9,6 +9,8 @@ public class AgeGroup {
         this.description = description;
     }
 
+    // Getters and Setters
+
     public int getAgeGroupID() {
         return ageGroupID;
     }

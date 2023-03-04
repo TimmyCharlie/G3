@@ -13,6 +13,8 @@ public class Age {
         this.female = female;
     }
 
+    // Getters and Setters
+
     public int getAgeID() {
         return ageID;
     }

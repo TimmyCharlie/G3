@@ -1,4 +1,4 @@
-package com.g3.g3;
+package com.g3;
 
 import bean.GAC;
 import bean.Age;

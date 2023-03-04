@@ -6,6 +6,7 @@ import bean.GAC;
 import java.sql.*;
 import java.util.ArrayList;
 
+// Age data access layer
 public class AgeDao {
 
     String dbUserName;
@@ -16,7 +17,9 @@ public class AgeDao {
         this.dbPassword = password;
     }
 
+    // Return list of Age with area and year
     public ArrayList<Age> getAgesByGeographicAreaIdAndYear(int geographicAreaId, int censusYearId) throws ClassNotFoundException, SQLException {
+        // Prepared statement
         String SELECT_GAC_SQL = "SELECT * FROM age WHERE geographicArea=? and censusYear=? order by ageGroup ASC;";
 
         ArrayList<Age> result = new ArrayList<>();
@@ -46,6 +49,7 @@ public class AgeDao {
         }
     }
 
+    // Return a single GAC by id
     public GAC getGACById(int id) throws ClassNotFoundException, SQLException {
         String SELECT_GAC_SQL = "SELECT * FROM geographicarea WHERE geographicAreaID=?;";
 

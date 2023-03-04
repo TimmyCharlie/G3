@@ -1,4 +1,4 @@
-package com.g3.g3;
+package com.g3;
 
 
 import jakarta.servlet.ServletException;
@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "gacListServlet", value = "/GACList")
 public class GACListServlet extends HttpServlet {

@@ -19,6 +19,8 @@ public class GAC {
         this.alternativeCode = alternativeCode;
     }
 
+    // Getters and Setters
+
     public void setGeographicAreaID(int geographicAreaID) {
         this.geographicAreaID = geographicAreaID;
     }

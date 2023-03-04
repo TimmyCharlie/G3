@@ -14,6 +14,8 @@ public class AgeGroupDao {
         this.dbPassword = password;
     }
 
+
+    // get a single age group by id
     public AgeGroup getAgeGroupById(int ageGroupID) throws ClassNotFoundException, SQLException {
         String SELECT_SQL = "SELECT * FROM agegroup WHERE ageGroupID=?;";
         Class.forName("com.mysql.jdbc.Driver");

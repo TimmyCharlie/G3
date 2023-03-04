@@ -15,6 +15,7 @@ public class GACDao {
         this.dbPassword = password;
     }
 
+    // Return list of GAC by level
     public ArrayList<GAC> getGACByLevel(int level) throws ClassNotFoundException, SQLException {
         String SELECT_GAC_SQL = "SELECT * FROM geographicarea WHERE level=?;";
 
@@ -36,6 +37,8 @@ public class GACDao {
         }
     }
 
+
+    // Return a single GAC by id
     public GAC getGACById(int id) throws ClassNotFoundException, SQLException {
         String SELECT_GAC_SQL = "SELECT * FROM geographicarea WHERE geographicAreaID=?;";
 
